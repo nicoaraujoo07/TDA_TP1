@@ -28,7 +28,7 @@ class TestJuegoMonedas(unittest.TestCase):
         resultados = {}
         archivo_actual = None
 
-        ruta_resultados = self.BASE / "resultados.txt"
+        ruta_resultados = self.BASE / "ejemplos" /"resultados.txt"
 
         with open(ruta_resultados, "r") as f:
             for linea in f:
@@ -58,7 +58,7 @@ class TestJuegoMonedas(unittest.TestCase):
         for archivo in self.ARCHIVOS:
             with self.subTest(archivo=archivo):
 
-                archivo_entrada = self.BASE / archivo
+                archivo_entrada = self.BASE / "ejemplos" / archivo
 
 
                 self.assertIn(
