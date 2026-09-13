@@ -1,0 +1,79 @@
+\section{Algoritmo para ganar el juego}
+
+En este trabajo realizaremos un análisis del problema y propondremos un algoritmo greedy que obtenga la solución óptima al mismo.
+
+\subsection{Problema}
+
+Dos hermanitos, Sophia y Mateo, juegan un juego de monedas: dada una fila de $n$ monedas de diferentes valores, en cada turno un jugador debe elegir alguna. Pero solo puede elegir la primera de la fila o la última. Al elegirla, la remueve de la fila y le toca al otro jugador, quien debe elegir otra moneda siguiendo la misma regla. Siguen agarrando monedas hasta que no quede ninguna. Quien gane será quien tenga las monedas que sumen el mayor valor. 
+
+Como Mateo es pequeño para entender el juego, Sophia elige por él. Sin embargo, Sophia es muy competitiva y quiere ganar siempre. Por lo que el problema consiste en que, dado n valores de monedas, debemos indicar qué monedas debe ir eligiendo Sophia para sí misma y para Mateo, de tal forma que se asegure de ganar siempre (Sophia siempre empieza jugando para sí misma).
+
+\subsection{Algoritmo Greedy}
+
+De forma intuitiva se ve que el algoritmo que resuelve nuestro problema es: Sophia debe elegir para sí misma la opción de mayor valor y para su hermano, la opción de menor valor.
+
+\begin{lstlisting}[language=Python]
+def solucion(monedas):
+    ini = 0
+    fin = len(monedas) - 1
+    mon_s = []
+    mon_m = []
+    turno = 0
+
+    while ini <= fin:
+        izq = monedas[ini]
+        der = monedas[fin]
+        if turno % 2 == 0:
+            if izq > der:
+                mon_s.append(izq)
+                ini += 1
+            else:
+                mon_s.append(der)
+                fin -= 1
+        else:
+            if izq < der:
+                mon_m.append(izq)
+                ini += 1
+            else:
+                mon_m.append(der)
+                fin -= 1
+        turno += 1
+    return mon_s, mon_m
+\end{lstlisting}
+
+\paragraph{Complejidad del algoritmo \newline}
+
+La complejidad del algoritmo propuesto para resolver el problema es $\mathcal{O}(n)$, siendo $n$ la cantidad de monedas al inicio del juego. Esto se debe a que en cada iteración se elimina exactamente una moneda (Sophia elige una moneda para ella o para su hermano), por lo que el ciclo se ejecuta exactamente $n$ veces. En cada iteración se realiza una cantidad constante de operaciones $\mathcal{O}(1)$, independientemente de los valores de las monedas. Por lo tanto, la variabilidad de los valores no afecta la complejidad temporal del algoritmo.
+
+
+
+\paragraph{¿El algoritmo es greedy?\newline}
+Sí, el algoritmo es greedy. De las monedas que son opción (estado actual), si Sophia elige para sí misma, toma la moneda que tiene mayor valor y si elige para su hermano, toma la moneda que tiene menor valor (regla greedy). De esta forma, maximizamos la suma acumulada de Sophia y minimizamos la suma acumulada de Mateo en sus respectivos turnos (óptimo local).
+
+\paragraph{¿Es óptimo?\newline}
+Sí, lo demostraremos en la siguiente sección.
+
+\subsection{Demostración}
+Vamos a demostrar que el algoritmo greedy propuesto es óptimo (desestimando el caso de una cantidad par de monedas de mismo valor, ya que siempre terminaría en empate sin importar la estrategia de Sophia). Para esto demostramos por inducción la proposición: dadas $n$ monedas, si Sophia elige para sí misma la moneda de mayor valor y para su hermano la de menor valor, Sophia gana el juego. Recordamos que siempre empieza Sophia.
+
+\noindent
+1. Caso base: $n$ = 1     
+
+\begin{center}
+    [$m_1$] 
+\end{center}
+
+Sophia elige la moneda de mayor valor, que en este caso es la única que hay. Por consiguiente, la suma acumulada de Sophia es mayor a la de Mateo y gana ella.
+
+\noindent
+2. Paso inductivo por método directo:
+
+Asumimos que en un arreglo de $h$ monedas la proposición se cumple y por ende Sophia gana. Esto quiere decir que la suma acumulada de Sophia es mayor a la de Mateo. 
+
+Observemos el siguiente arreglo:
+
+\begin{center}
+    [$m_1, m_2, …, m_h, m_{h+1}$]
+\end{center}
+
+Si $m_1$ \(>\) $m_{h+1}$, Sophia toma $m_1$. El arreglo ahora tiene una moneda menos, es decir, tiene $h$ monedas y le toca a Mateo.
