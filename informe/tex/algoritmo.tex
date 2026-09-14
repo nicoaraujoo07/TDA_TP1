@@ -4,7 +4,7 @@ En este trabajo realizaremos un análisis del problema y propondremos un algorit
 
 \subsection{Problema}
 
-Dos hermanitos, Sophia y Mateo, juegan un juego de monedas: dada una fila de $n$ monedas de diferentes valores, en cada turno un jugador debe elegir alguna. Pero solo puede elegir la primera de la fila o la última. Al elegirla, la remueve de la fila y le toca al otro jugador, quien debe elegir otra moneda siguiendo la misma regla. Siguen agarrando monedas hasta que no quede ninguna. Quien gane será quien tenga las monedas que sumen el mayor valor. 
+Dos hermanitos, Sophia y Mateo, juegan un juego de monedas: dada una fila de $n$ monedas de diferentes valores, en cada turno un jugador debe elegir alguna. Pero solo puede elegir la primera de la fila o la última. Al elegirla, la remueve de la fila y le toca al otro jugador, quien debe elegir otra moneda siguiendo la misma regla. Siguen agarrando monedas hasta que no quede ninguna. Quien gane será quien tenga las monedas que sumen el mayor valor.
 
 Como Mateo es pequeño para entender el juego, Sophia elige por él. Sin embargo, Sophia es muy competitiva y quiere ganar siempre. Por lo que el problema consiste en que, dado n valores de monedas, debemos indicar qué monedas debe ir eligiendo Sophia para sí misma y para Mateo, de tal forma que se asegure de ganar siempre (Sophia siempre empieza jugando para sí misma).
 
@@ -45,6 +45,14 @@ def solucion(monedas):
 
 La complejidad del algoritmo propuesto para resolver el problema es $\mathcal{O}(n)$, siendo $n$ la cantidad de monedas al inicio del juego. Esto se debe a que en cada iteración se elimina exactamente una moneda (Sophia elige una moneda para ella o para su hermano), por lo que el ciclo se ejecuta exactamente $n$ veces. En cada iteración se realiza una cantidad constante de operaciones $\mathcal{O}(1)$, independientemente de los valores de las monedas. Por lo tanto, la variabilidad de los valores no afecta la complejidad temporal del algoritmo.
 
+\paragraph{Variabilidad de los valores y optimalidad\newline}
+
+La magnitud de las diferencias entre los valores de las monedas no afecta la optimalidad del algoritmo, siempre que se mantengan las condiciones bajo las cuales se garantiza la victoria. El objetivo considerado no es maximizar la ventaja de Sophia sobre Mateo, sino únicamente conseguir que su suma final sea mayor. Por lo tanto, es indistinto que Sophia gane por 5 o por 500 puntos.
+
+En cada turno de Sophia, el algoritmo selecciona el extremo de mayor valor. El otro extremo continúa disponible para el turno siguiente de Mateo, en el cual se elige el menor de los dos extremos disponibles. En consecuencia, la moneda asignada a Mateo es menor o igual que la obtenida previamente por Sophia.
+
+Sin embargo, la existencia de valores repetidos sí puede afectar el resultado: las comparaciones pueden dejar de ser estrictas y producir un empate. Por ello, la variabilidad no modifica la regla ni la complejidad del algoritmo, pero la distribución concreta de los valores puede determinar si la ventaja final es estricta. Si todos los valores son distintos y positivos, Sophia obtiene una ventaja estricta; si se permiten repeticiones, el algoritmo puede garantizar solamente que no pierda en ciertos casos.
+
 
 
 \paragraph{¿El algoritmo es greedy?\newline}
@@ -54,22 +62,22 @@ Sí, el algoritmo es greedy. De las monedas que son opción (estado actual), si 
 Sí, lo demostraremos en la siguiente sección.
 
 \subsection{Demostración}
-Vamos a demostrar que el algoritmo greedy propuesto es óptimo (desestimando el caso de una cantidad par de monedas de mismo valor, ya que siempre terminaría en empate sin importar la estrategia de Sophia). 
+Vamos a demostrar que el algoritmo greedy propuesto es óptimo (desestimando el caso de una cantidad par de monedas de mismo valor, ya que siempre terminaría en empate sin importar la estrategia de Sophia).
 Para esto demostramos por inducción que, dadas $n$ monedas, si Sophia elige para sí misma la moneda de mayor valor y para su hermano la de menor valor, Sophia gana el juego. Además, Sophia debe empezar siempre.
 
 La proposición que vamos a demostrar en el paso inductivo será $P(h) \longrightarrow  P(h+2)$. Por lo que necesitaremos 2 casos bases para poder cubrir tanto una cantidad par de monedas como una impar.
 
 \noindent\newline
-1. Casos bases: 
+1. Casos bases:
 
 \begin{center}
-$n$ = 1 $\longrightarrow$ [$m_1$] 
+$n$ = 1 $\longrightarrow$ [$m_1$]
 \end{center}
 
-Sophia empieza y elige la única moneda que hay. Por consiguiente, la suma acumulada de Sophia es mayor a la de Mateo, pues la de él queda en cero, y Sophia gana el juego.  
+Sophia empieza y elige la única moneda que hay. Por consiguiente, la suma acumulada de Sophia es mayor a la de Mateo, pues la de él queda en cero, y Sophia gana el juego.
 
 \begin{center}
-    $n$ = 2 $\longrightarrow$ [$m_1$, $m_2$] 
+    $n$ = 2 $\longrightarrow$ [$m_1$, $m_2$]
 \end{center}
 
 Sophia empieza y elige la moneda de mayor valor. Luego, Mateo se queda con la que sobra. Por consiguiente, la suma acumulada de Sophia es mayor a la de Mateo y gana el juego.
@@ -79,7 +87,7 @@ Sophia empieza y elige la moneda de mayor valor. Luego, Mateo se queda con la qu
 
 Asumimos que $P(h)$ se cumple. Esto quiere decir que en un arreglo de $h$ monedas, Sophia gana.
 
-Si tomamos el caso base de $n$ = 1, sin importar cuantas veces le sumemos 2, el arreglo va a terminar teniendo una cantidad impar de monedas. Podemos observar que 
+Si tomamos el caso base de $n$ = 1, sin importar cuantas veces le sumemos 2, el arreglo va a terminar teniendo una cantidad impar de monedas. Podemos observar que
 le tocará jugar a Sophia cuando haya una cantidad impar de monedas disponibles y a Mateo cuando haya una cantidad par.
 En cambio, si tomamos el caso base de $n$ = 2, sin importar cuantas veces le sumemos 2, el arreglo va a terminar teniendo una cantidad par de monedas. En este caso,
 le tocará jugar a Sophia cuando haya una cantidad par de monedas disponibles y a Mateo cuando haya una cantidad impar.
@@ -97,7 +105,7 @@ El hecho de que le toque a Sophia jugar en el arreglo de $h$ monedas coincide co
 Que Sophia gane en ambos subarreglos significa que en ambos obtuvo una suma acumulada mayor que la de su hermano y como se cumple que:
 
 \begin{center}
-$a \geq b, c \geq d \longrightarrow  a+c \geq b+d$    
+$a \geq b, c \geq d \longrightarrow  a+c \geq b+d$
 \end{center}
 
-Sophia gana el juego completo. 
+Sophia gana el juego completo.
