@@ -1,0 +1,13 @@
+\subsection{Conclusiones}
+
+En este trabajo se ha analizado el juego de las monedas, donde dos jugadores (Sophia y Mateo) eligen monedas de una fila
+según ciertas reglas y Sophia, aplicando un enfoque greedy, busca ganar siempre. A través de la implementación del algoritmo 
+propuesto, hemos logrado simular el comportamiento de los jugadores demostrando que todas las situaciones\footnote{ Excepto el
+caso en que las monedas inicialmente son una cantidad par y son todas iguales. No hay forma de que esto no termine en empate.} 
+desembocan  en el triunfo de Sophia. Esto lo logramos aplicando iterativamente una simple regla: dadas las monedas disponibles
+en sus respectivos turnos, Sophia elige la moneda de mayor valor y Mateo la de menor valor.
+
+La solución propuesta cumple con la función de optimizar la selección de monedas para Sophia, demostrando como los algoritmos greedy
+pueden ser efectivos en este tipo de situaciones. Pero, a pesar de ser eficiente y práctico, este enfoque tiene sus limitaciones. Una
+de ellas sucede si Sophia busca maximizar su suma acumulada y ganar. Con el algoritmo planteado dicho problema no se puede resolver
+de forma óptima y aunque nos sea costoso, podríamos usar backtracking en este caso.
