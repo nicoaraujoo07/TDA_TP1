@@ -41,11 +41,11 @@ def solucion(monedas):
     return mon_s, mon_m
 \end{lstlisting}
 
-\paragraph{Complejidad del algoritmo \newline}
+\subsubsection{Complejidad del algoritmo}
 
 La complejidad del algoritmo propuesto para resolver el problema es $\mathcal{O}(n)$, siendo $n$ la cantidad de monedas al inicio del juego. Esto se debe a que en cada iteración se elimina exactamente una moneda (Sophia elige una moneda para ella o para su hermano), por lo que el ciclo se ejecuta exactamente $n$ veces. En cada iteración se realiza una cantidad constante de operaciones $\mathcal{O}(1)$, independientemente de los valores de las monedas. Por lo tanto, la variabilidad de los valores no afecta la complejidad temporal del algoritmo.
 
-\paragraph{Variabilidad de los valores y optimalidad\newline}
+\subsubsection{Variabilidad de los valores y optimalidad}
 
 La magnitud de las diferencias entre los valores de las monedas no afecta la optimalidad del algoritmo, siempre que se mantengan las condiciones bajo las cuales se garantiza la victoria. El objetivo considerado no es maximizar la ventaja de Sophia sobre Mateo, sino únicamente conseguir que su suma final sea mayor. Por lo tanto, es indistinto que Sophia gane por 5 o por 500 puntos.
 
@@ -55,10 +55,10 @@ Sin embargo, la existencia de valores repetidos sí puede afectar el resultado: 
 
 
 
-\paragraph{¿El algoritmo es greedy?\newline}
+\subsubsection{¿El algoritmo es greedy?}
 Sí, el algoritmo es greedy. De las monedas que son opción (estado actual), si Sophia elige para sí misma, toma la moneda que tiene mayor valor y si elige para su hermano, toma la moneda que tiene menor valor (regla greedy). De esta forma, maximizamos la suma acumulada de Sophia y minimizamos la suma acumulada de Mateo en sus respectivos turnos (óptimo local).
 
-\paragraph{¿Es óptimo?\newline}
+\subsubsection{¿Es óptimo?}
 Sí, lo demostraremos en la siguiente sección.
 
 \subsection{Demostración}
