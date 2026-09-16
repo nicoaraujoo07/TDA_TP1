@@ -12,15 +12,20 @@ def solucion(monedas):
             if izq > der:
                 mon_s.append(izq)
                 ini += 1
+                print("Primera moneda para Sophia")
             else:
                 mon_s.append(der)
                 fin -= 1
+                print("Ultima moneda para Sophia")
         else:
             if izq < der:
                 mon_m.append(izq)
                 ini += 1
+                print("Primera moneda para Mateo")
             else:
                 mon_m.append(der)
                 fin -= 1
+                print("Ultima moneda para Mateo")
+                
         turno += 1
     return mon_s, mon_m
